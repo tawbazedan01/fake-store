@@ -3,17 +3,24 @@ const getCategories = async ()=>{
     return data;
 }
 const displayCategories = async ()=>{
-    const categories = await getCategories();
-    const result = categories.map((category) =>{
-        return `
-        <div class="category">
-        <h2> ${category}</h2>
-        <a href="categoryDetails.html?category=${category}">Details</a>
-        </div>
-        `
+    const loader = document.querySelector(".loader-container");
+    loader.classList.add("active");
+    try{  const categories = await getCategories();
+        const result = categories.map((category) =>{
+            return `
+            <div class="category">
+            <h2> ${category}</h2>
+            <a href="categoryDetails.html?category=${category}">Details</a>
+            </div>
+            `
+        }
+        ).join('');
+        document.querySelector(".categories .row").innerHTML=result;
+    }catch(error){
+        document.querySelector(".categories .row").innerHTML="<p> error loading Categories </p>";
+    }finally{
+        loader.classList.remove("active");
     }
-    ).join('');
-    document.querySelector(".categories .row").innerHTML=result;
 }
 
 const getProducts = async()=>{
@@ -21,6 +28,9 @@ const getProducts = async()=>{
     return data;
 }
 const displayProducts = async()=>{
+    const loader = document.querySelector(".loader-container");
+    loader.classList.add("active");
+    try{
     const data = await getProducts();
     const result = data.products.map( (product)=>{
         return `
@@ -32,6 +42,22 @@ const displayProducts = async()=>{
     }
 ).join('');
    document.querySelector(".products .row").innerHTML=result;
+}catch(error){
+    document.querySelector(".products .row").innerHTML="<p> error loading products </p>";
+}finally{
+    loader.classList.remove("active");
+}
 }
 displayCategories();
 displayProducts(); 
+
+window.onscroll = function(){
+    const nav = document.querySelector(".header");
+    const categories = document.querySelector(".categories")
+    console.log(categories.offsetTop);
+    console.log(window.scrollY);
+    if(window.scrollY > categories.offsetTop){
+        nav.classList.add("scrollNavbar");}
+    else{
+        nav.classList.remove("scrollNavbar");}
+} 

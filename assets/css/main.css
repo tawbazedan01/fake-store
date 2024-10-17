@@ -1,6 +1,69 @@
 @import './base.css'; 
+.header{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background-color: #eceaea;
+    position: sticky;
+    top: 0;
+}
+.header .logo img{
+    height: 50px;
+    border-radius: 60%;
+}
+.list .options a{
+    color: black;
+    text-transform: uppercase;
+    text-decoration-line: underline;
+}
+.list .options{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.auth{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    text-transform: uppercase; 
+    
+}
+.auth a{
+    border: 2px solid  black; 
+    color: black;
+    padding: 7px;
+    border-radius: 50px;
+}
+.scrollNavbar{
+    background-color: #fff;
+}
+
+.loader-container{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%; 
+    position: fixed;
+    background-color: rgba(0, 0, 0, .5);
+}
+.active{
+    display: flex;
+}
+.loader{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 3px solid #000;
+    border-bottom-color: transparent;
+    animation: rotate 1s infinite linear;
+}
+@keyframes rotate{
+    0%{ transform: rotate(0deg);}
+    100%{transform: rotate(360deg);}
+}
 .category{
-    background-color:#fff;
+    background-color:#fff=;
     width: 25%;
     padding: 20px;
     margin: 10px;

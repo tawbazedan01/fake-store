@@ -18,4 +18,4 @@ const displayProducts = async ()=>{
 ).join('');
    document.querySelector(".products .row").innerHTML=result;
 }
-displayProducts();
+displayProducts(); 
