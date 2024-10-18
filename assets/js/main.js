@@ -54,10 +54,26 @@ displayProducts();
 window.onscroll = function(){
     const nav = document.querySelector(".header");
     const categories = document.querySelector(".categories")
-    console.log(categories.offsetTop);
-    console.log(window.scrollY);
     if(window.scrollY > categories.offsetTop){
         nav.classList.add("scrollNavbar");}
     else{
         nav.classList.remove("scrollNavbar");}
 } 
+
+const countDown = ()=>{
+    const countDownDate = new Date ("2025-03-01T00:00:00").getTime();
+    const now = new Date().getTime();
+    const distance = countDownDate - now ; 
+    const days = Math.floor(distance/86400000);
+    const hours = Math.floor((distance % 86400000)/3600000);
+    const minutes = Math.floor((distance % (1000 * 60 * 60))/60000);
+    const seconds = Math.floor((distance % (1000 * 60))/1000);
+    document.querySelector("#days").textContent=days;
+    document.querySelector("#hours").textContent=hours;
+    document.querySelector("#minutes").textContent=minutes;
+    document.querySelector("#seconds").textContent=seconds;
+}
+
+setInterval(()=>{
+    countDown();
+},1000)
