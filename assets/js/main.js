@@ -23,25 +23,47 @@ const displayCategories = async ()=>{
     }
 }
 
-const getProducts = async()=>{
-    const {data} = await axios.get(`https://dummyjson.com/products`);
+const getProducts = async(page)=>{
+    const skip = (page - 1) * 30 ;
+    const {data} = await axios.get(`https://dummyjson.com/products?limit=30&skip=${skip}`);
+    console.log(data);
     return data;
 }
-const displayProducts = async()=>{
+const displayProducts = async(page = 1)=>{
     const loader = document.querySelector(".loader-container");
     loader.classList.add("active");
     try{
-    const data = await getProducts();
+    const data = await getProducts(page);
+    const numbersOfPages = Math.ceil(data.total / 30);
+    console.log(page);
     const result = data.products.map( (product)=>{
         return `
         <div class="product">
            <img src="${product.thumbnail}" alt="${product.description}" />
            <h3> ${product.title}</h3>
+           <h4> ${product.price} </h4>
         </div>
     ` 
     }
 ).join('');
-   document.querySelector(".products .row").innerHTML=result;
+   document.querySelector(".products .row").innerHTML = result;
+   let paginationLinks = ``;
+   if( page == 1){
+    paginationLinks+=`<li class="page-item"><button disabled class="page-link">&laquo;</button></li>`;
+
+   }else{
+      paginationLinks+=`<li class="page-item"><button onclick=displayProducts('${page-1}') class="page-link">&laquo;</button></li>`;
+   }
+   for(i=1; i<=numbersOfPages; i++){
+    paginationLinks+=`<li class="page-item ${i == page?'active':''} "><button onclick=displayProducts('${i}') class="page-link">${i}</button></li>`;
+   }
+   if(page == numbersOfPages){
+    paginationLinks+=`<li class="page-item"><button disabled class="page-link">&raquo;</button></li>`;
+   }else{
+    paginationLinks+=`<li class="page-item"><button onclick=displayProducts('${parseInt(page)+1}') class="page-link">&raquo;</button></li>`;
+   }
+   console.log(paginationLinks);
+   document.querySelector(".pagination").innerHTML = paginationLinks;
 }catch(error){
     document.querySelector(".products .row").innerHTML="<p> error loading products </p>";
 }finally{
