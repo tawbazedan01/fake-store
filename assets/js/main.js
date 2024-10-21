@@ -39,7 +39,7 @@ const displayProducts = async(page = 1)=>{
         <div class="product">
            <img src="${product.thumbnail}" alt="${product.description}" />
            <h3> ${product.title}</h3>
-           <h4> ${product.price} </h4>
+           <a href='productDetails.html?product=${product.id}'>Product Details</a>
         </div>
     ` 
     }
@@ -95,4 +95,4 @@ const countDown = ()=>{
 
 setInterval(()=>{
     countDown();
-},1000)
+},1000) 
