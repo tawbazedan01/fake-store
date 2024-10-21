@@ -17,4 +17,4 @@ const displaygetproductDetails = async ()=>{
         `;
     document.querySelector(".product-details .row").innerHTML=result;
 }; 
-    displaygetproductDetails();
+    displaygetproductDetails(); 

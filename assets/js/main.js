@@ -37,7 +37,7 @@ const displayProducts = async(page = 1)=>{
     const result = data.products.map( (product)=>{
         return `
         <div class="product">
-           <img src="${product.thumbnail}" alt="${product.description}" />
+           <img src="${product.thumbnail}" alt="${product.description}" class="images" />
            <h3> ${product.title}</h3>
            <a href='productDetails.html?product=${product.id}'>Product Details</a>
         </div>
@@ -61,6 +61,7 @@ const displayProducts = async(page = 1)=>{
     paginationLinks+=`<li class="page-item"><button onclick=displayProducts('${parseInt(page)+1}') class="page-link">&raquo;</button></li>`;
    }
    document.querySelector(".pagination").innerHTML = paginationLinks;
+   modal();
 }catch(error){
     document.querySelector(".products .row").innerHTML="<p> error loading products </p>";
 }finally{
@@ -69,7 +70,8 @@ const displayProducts = async(page = 1)=>{
 }
 
 displayCategories();
-displayProducts(); 
+displayProducts();
+
 
 window.onscroll = function(){
     const nav = document.querySelector(".header");
@@ -97,3 +99,44 @@ const countDown = ()=>{
 setInterval(()=>{
     countDown();
 },1000);
+
+
+function modal(){
+    const modal= document.querySelector(".my-modal");
+    const closeBtn = document.querySelector(".close-btn");
+    const leftBtn = document.querySelector(".left-btn");
+    const rightBtn = document.querySelector(".right-btn");
+    const images =Array.from (document.querySelectorAll(".images"));
+    let currentIndex = 0;
+    images.forEach(function(img){  
+        img.addEventListener("click",function(e){
+            modal.classList.remove('d-none'); 
+            modal.querySelector("img").setAttribute("src",e.target.src);
+            const currentImage = e.target;
+            currentIndex = images.indexOf(currentImage);
+        })
+    });
+
+    leftBtn.addEventListener("click",function(){
+        if( currentIndex < 0 ){
+            currentIndex = images.length - 1;
+        }
+        currentIndex--;
+        const src = images[currentIndex].src;
+        modal.querySelector("img").setAttribute("src",src);
+    })
+
+    rightBtn.addEventListener("click",function(){
+        currentIndex++;
+        if(currentIndex >= images.length){
+            currentIndex = 0; 
+        }
+        const src = images[currentIndex].src;
+        modal.querySelector("img").setAttribute("src",src);
+    })
+
+    closeBtn.addEventListener("click",function(){
+        modal.classList.add('d-none');
+    }) 
+
+}
