@@ -11,10 +11,10 @@ const displaygetproductDetails = async ()=>{
            <img src="${data.thumbnail}" alt="${data.description}" />
            <h3> ${data.title}</h3>
            <h4> ${data.price} </h4>
+           <h5> ${data.brand}</h5>
            <span>${data.rating}</span>
         </div>
         `;
     document.querySelector(".product-details .row").innerHTML=result;
-};
-
-displaygetproductDetails();  
+}; 
+    displaygetproductDetails();

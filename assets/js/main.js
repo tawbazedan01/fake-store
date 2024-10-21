@@ -1,4 +1,4 @@
-const getCategories = async ()=>{
+ const getCategories = async ()=>{
     const {data} = await axios.get(`https://dummyjson.com/products/category-list`);
     return data;
 }
@@ -67,6 +67,7 @@ const displayProducts = async(page = 1)=>{
     loader.classList.remove("active");
 }
 }
+
 displayCategories();
 displayProducts(); 
 
@@ -95,4 +96,4 @@ const countDown = ()=>{
 
 setInterval(()=>{
     countDown();
-},1000) 
+},1000);
